@@ -63,4 +63,4 @@ jobs:
         context: ./backend
         file: ./backend/Dockerfile
         push: true
-        tags: dimosoftuni/backend:latest, dimosoftuni/backend:${{ steps.shorten_sha.outputs.short_sha }}-${{ github.run_number }}
+        tags: dimosoftuni/backend:latest, dimosoftuni/backend:${GITHUB_RUN_NUMBER}
