@@ -30,4 +30,4 @@ jobs:
         context: ./frontend
         file: ./frontend/Dockerfile
         push: true
-        tags: dimosoftuni/frontend:latest
+        tags: dimosoftuni/frontend:latest, dimosoftuni/frontend:${{ github.sha }}
