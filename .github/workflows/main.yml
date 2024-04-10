@@ -7,7 +7,6 @@ on:
 jobs:
   build-frontend:
     runs-on: ubuntu-latest
-
     steps:
     - name: Repository checkout
       uses: actions/checkout@v4
@@ -30,4 +29,30 @@ jobs:
         context: ./frontend
         file: ./frontend/Dockerfile
         push: true
-        tags: dimosoftuni/frontend:latest, dimosoftuni/frontend:${{ github.sha }}
+        tags: dimosoftuni/frontend:latest, dimosoftuni/frontend:${{ github.sha }}-${{ github.run_number }}
+
+  build-backend:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Repository checkout
+      uses: actions/checkout@v4
+
+    - name: Set up QEMU
+      uses: docker/setup-qemu-action@v3
+      
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v3
+      
+    - name: Login to Docker Hub
+      uses: docker/login-action@v3
+      with:
+        username: ${{ secrets.DOCKER_HUB_USERNAME }}
+        password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+      
+    - name: Build and push
+      uses: docker/build-push-action@v5
+      with:
+        context: ./backend
+        file: ./backend/Dockerfile
+        push: true
+        tags: dimosoftuni/backend:latest, dimosoftuni/backend:${{ github.sha }}-${{ github.run_number }}
